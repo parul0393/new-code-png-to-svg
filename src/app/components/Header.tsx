@@ -46,16 +46,26 @@ export function Header() {
             </Link>
 
             {user ? (
-              <button
-                type="button"
-                onClick={() => logout().catch(console.error)}
-                disabled={loading}
-                className="px-6 py-2.5 rounded-full border-2 border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ fontWeight: 600 }}
-              >
-                Logout
-              </button>
-            ) : (
+  <>
+    <Link
+      to="/dashboard"
+      className="text-[var(--warm-brown)] hover:text-[var(--warm-orange)] transition-colors duration-300"
+      style={{ fontWeight: 500 }}
+    >
+      Dashboard
+    </Link>
+
+    <button
+      type="button"
+      onClick={() => logout().catch(console.error)}
+      disabled={loading}
+      className="px-6 py-2.5 rounded-full border-2 border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      style={{ fontWeight: 600 }}
+    >
+      Logout
+    </button>
+  </>
+) : (
               <>
                 <Link
                   to="/?auth=login"
@@ -102,16 +112,26 @@ export function Header() {
             </Link>
 
             {user ? (
-              <button
-                type="button"
-                onClick={() => logout().catch(console.error)}
-                disabled={loading}
-                className="block w-full text-center px-6 py-3 rounded-xl border-2 border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ fontWeight: 600 }}
-              >
-                Logout
-              </button>
-            ) : (
+  <>
+    <Link
+      to="/dashboard"
+      className="block w-full text-left px-4 py-3 text-[var(--warm-brown)] hover:text-[var(--warm-orange)] hover:bg-[var(--warm-beige)]/50 rounded-xl transition-all duration-300"
+      style={{ fontWeight: 500 }}
+    >
+      Dashboard
+    </Link>
+
+    <button
+      type="button"
+      onClick={() => logout().catch(console.error)}
+      disabled={loading}
+      className="block w-full text-center px-6 py-3 rounded-xl border-2 border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      style={{ fontWeight: 600 }}
+    >
+      Logout
+    </button>
+  </>
+) : (
               <>
                 <Link
                   to="/?auth=login"
@@ -128,6 +148,9 @@ export function Header() {
                 >
                   Sign Up
                 </Link>
+                {/* <Link to="/dashboard" className="block w-full text-center px-6 py-3 rounded-xl border-2 border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)] transition-all duration-300" style={{ fontWeight: 500 }}>
+                  Dashboard
+                </Link> */}
               </>
             )}
           </div>

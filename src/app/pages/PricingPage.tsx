@@ -2,6 +2,7 @@ import { Check, X, ChevronDown } from 'lucide-react';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { Pricing } from '../components/Pricing';
 
 export function PricingPage() {
   return (
@@ -23,146 +24,8 @@ export function PricingPage() {
         </section>
 
         {/* Pricing Cards Section */}
-        <section className="w-full px-6 py-16 md:py-20">
-          <div className="max-w-6xl mx-auto">
-            {/* Pricing Cards */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {/* Web App Plan */}
-              <div className="bg-white rounded-2xl p-8 border border-[var(--warm-brown)]/10 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col">
-                {/* Most Popular Badge */}
-                <div className="absolute -top-3 left-8">
-                  <div className="bg-[var(--warm-orange)] text-white px-4 py-1.5 rounded-full text-sm" style={{ fontWeight: 600 }}>
-                    Most Popular
-                  </div>
-                </div>
-
-                <div className="flex-1 flex flex-col pt-2">
-                  {/* Plan Header */}
-                  <div className="space-y-3">
-                    <h3 className="text-3xl text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>
-                      Web App
-                    </h3>
-                    <p className="text-sm text-[var(--warm-brown)]/70 leading-relaxed">
-                      Unlimited web conversions for personal use. Perfect for designers and creators who need quick, reliable vector conversion.
-                    </p>
-                  </div>
-
-                  {/* Price */}
-                  <div className="py-2 mt-6">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-5xl text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>
-                        $12
-                      </span>
-                      <span className="text-lg text-[var(--warm-brown)]/60">/month</span>
-                    </div>
-                  </div>
-
-                  {/* Features List */}
-                  <div className="space-y-3 py-4 mt-6 flex-1">
-                    <div className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
-                      <span className="text-[var(--warm-brown)]">Unlimited web conversions</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
-                      <span className="text-[var(--warm-brown)]">Advanced quality controls</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
-                      <span className="text-[var(--warm-brown)]">Background removal tool</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
-                      <span className="text-[var(--warm-brown)]">Instant downloads</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
-                      <span className="text-[var(--warm-brown)]">Cancel anytime</span>
-                    </div>
-                  </div>
-
-                  {/* CTA Button */}
-                  <div className="mt-6">
-                    <button className="w-full py-3.5 px-8 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-sm hover:shadow-md" style={{ fontWeight: 600 }}>
-                      Subscribe
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* API Access Plan */}
-              <div className="bg-white rounded-2xl p-8 border border-[var(--warm-brown)]/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col">
-                <div className="flex-1 flex flex-col">
-                  {/* Plan Header */}
-                  <div className="space-y-3">
-                    <h3 className="text-3xl text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>
-                      API Access
-                    </h3>
-                    <p className="text-sm text-[var(--warm-brown)]/70 leading-relaxed">
-                      Integrate conversion power into your applications. Flexible credit-based pricing with volume discounts.
-                    </p>
-                  </div>
-
-                  {/* Credit Info */}
-                  <div className="py-2 mt-6">
-                    <p className="text-sm text-[var(--warm-brown)]/60">
-                      1 Credit = 1 Image Conversion
-                    </p>
-                  </div>
-
-                  {/* Pricing Options */}
-                  <div className="space-y-3 mt-6 flex-1">
-                    <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/30 rounded-xl cursor-pointer hover:bg-[var(--warm-beige)]/50 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <input type="radio" name="api-plan" className="w-4 h-4 accent-[var(--warm-orange)]" defaultChecked />
-                        <span className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>100 credits</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>$25</div>
-                        <div className="text-xs text-[var(--warm-brown)]/60">$0.25/credit</div>
-                      </div>
-                    </label>
-
-                    <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/30 rounded-xl cursor-pointer hover:bg-[var(--warm-beige)]/50 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <input type="radio" name="api-plan" className="w-4 h-4 accent-[var(--warm-orange)]" />
-                        <span className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>500 credits</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>$100</div>
-                        <div className="text-xs text-[var(--warm-brown)]/60">$0.20/credit</div>
-                      </div>
-                    </label>
-
-                    <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/30 rounded-xl cursor-pointer hover:bg-[var(--warm-beige)]/50 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <input type="radio" name="api-plan" className="w-4 h-4 accent-[var(--warm-orange)]" />
-                        <span className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>1000 credits</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>$150</div>
-                        <div className="text-xs text-[var(--warm-brown)]/60">$0.15/credit</div>
-                      </div>
-                    </label>
-
-                    <div className="pt-2">
-                      <button className="text-[var(--warm-orange)] text-sm hover:text-[var(--warm-brown)] transition-colors flex items-center gap-1" style={{ fontWeight: 600 }}>
-                        View all plans <span>→</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* CTA Button */}
-                  <div className="mt-6">
-                    <button className="w-full py-3.5 px-8 rounded-full bg-[var(--warm-brown)] text-white hover:bg-[var(--warm-dark)] transition-all duration-300 shadow-sm hover:shadow-md" style={{ fontWeight: 600 }}>
-                      Subscribe
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <Pricing/>
+        
 
         {/* FAQ Section */}
         <section className="w-full px-6 py-16 md:py-20">
@@ -226,3 +89,148 @@ function AccordionItem({ value, question, answer }: AccordionItemProps) {
     </Accordion.Item>
   );
 }
+
+/*
+  This is a multiline comment
+  in a TypeScript code block.
+  <section className="w-full px-6 py-16 md:py-20">
+          <div className="max-w-6xl mx-auto">
+        
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              /* Web App Plan */
+              // <div className="bg-white rounded-2xl p-8 border border-[var(--warm-brown)]/10 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col">
+              //   {/* Most Popular Badge */}
+              //   <div className="absolute -top-3 left-8">
+              //     <div className="bg-[var(--warm-orange)] text-white px-4 py-1.5 rounded-full text-sm" style={{ fontWeight: 600 }}>
+              //       Most Popular
+              //     </div>
+              //   </div>
+
+              //   <div className="flex-1 flex flex-col pt-2">
+              //     {/* Plan Header */}
+              //     <div className="space-y-3">
+              //       <h3 className="text-3xl text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>
+              //         Web App
+              //       </h3>
+              //       <p className="text-sm text-[var(--warm-brown)]/70 leading-relaxed">
+              //         Unlimited web conversions for personal use. Perfect for designers and creators who need quick, reliable vector conversion.
+              //       </p>
+              //     </div>
+
+              //     {/* Price */}
+              //     <div className="py-2 mt-6">
+              //       <div className="flex items-baseline gap-1">
+              //         <span className="text-5xl text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>
+              //           $12
+              //         </span>
+              //         <span className="text-lg text-[var(--warm-brown)]/60">/month</span>
+              //       </div>
+              //     </div>
+
+              //     {/* Features List */}
+              //     <div className="space-y-3 py-4 mt-6 flex-1">
+              //       <div className="flex items-center gap-3">
+              //         <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
+              //         <span className="text-[var(--warm-brown)]">Unlimited web conversions</span>
+              //       </div>
+              //       <div className="flex items-center gap-3">
+              //         <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
+              //         <span className="text-[var(--warm-brown)]">Advanced quality controls</span>
+              //       </div>
+              //       <div className="flex items-center gap-3">
+              //         <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
+              //         <span className="text-[var(--warm-brown)]">Background removal tool</span>
+              //       </div>
+              //       <div className="flex items-center gap-3">
+              //         <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
+              //         <span className="text-[var(--warm-brown)]">Instant downloads</span>
+              //       </div>
+              //       <div className="flex items-center gap-3">
+              //         <Check className="w-5 h-5 text-[var(--warm-orange)] flex-shrink-0" />
+              //         <span className="text-[var(--warm-brown)]">Cancel anytime</span>
+              //       </div>
+              //     </div>
+
+              //     {/* CTA Button */}
+              //     <div className="mt-6">
+              //       <button className="w-full py-3.5 px-8 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-sm hover:shadow-md" style={{ fontWeight: 600 }}>
+              //         Subscribe
+              //       </button>
+              //     </div>
+              //   </div>
+              // </div>
+
+              // {/* API Access Plan */}
+              // <div className="bg-white rounded-2xl p-8 border border-[var(--warm-brown)]/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col">
+              //   <div className="flex-1 flex flex-col">
+              //     {/* Plan Header */}
+              //     <div className="space-y-3">
+              //       <h3 className="text-3xl text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>
+              //         API Access
+              //       </h3>
+              //       <p className="text-sm text-[var(--warm-brown)]/70 leading-relaxed">
+              //         Integrate conversion power into your applications. Flexible credit-based pricing with volume discounts.
+              //       </p>
+              //     </div>
+
+              //     {/* Credit Info */}
+              //     <div className="py-2 mt-6">
+              //       <p className="text-sm text-[var(--warm-brown)]/60">
+              //         1 Credit = 1 Image Conversion
+                  //   </p>
+                  // </div>
+
+                  // {/* Pricing Options */}
+                  // <div className="space-y-3 mt-6 flex-1">
+                  //   <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/30 rounded-xl cursor-pointer hover:bg-[var(--warm-beige)]/50 transition-colors">
+                  //     <div className="flex items-center gap-3">
+                  //       <input type="radio" name="api-plan" className="w-4 h-4 accent-[var(--warm-orange)]" defaultChecked />
+                  //       <span className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>100 credits</span>
+                  //     </div>
+                  //     <div className="text-right">
+                  //       <div className="text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>$25</div>
+                  //       <div className="text-xs text-[var(--warm-brown)]/60">$0.25/credit</div>
+                  //     </div>
+                  //   </label>
+
+                  //   <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/30 rounded-xl cursor-pointer hover:bg-[var(--warm-beige)]/50 transition-colors">
+                  //     <div className="flex items-center gap-3">
+                  //       <input type="radio" name="api-plan" className="w-4 h-4 accent-[var(--warm-orange)]" />
+                  //       <span className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>500 credits</span>
+                  //     </div>
+                  //     <div className="text-right">
+                  //       <div className="text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>$100</div>
+                  //       <div className="text-xs text-[var(--warm-brown)]/60">$0.20/credit</div>
+                  //     </div>
+                  //   </label>
+
+                  //   <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/30 rounded-xl cursor-pointer hover:bg-[var(--warm-beige)]/50 transition-colors">
+                  //     <div className="flex items-center gap-3">
+                  //       <input type="radio" name="api-plan" className="w-4 h-4 accent-[var(--warm-orange)]" />
+                  //       <span className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>1000 credits</span>
+                  //     </div>
+                  //     <div className="text-right">
+                  //       <div className="text-[var(--warm-dark)]" style={{ fontWeight: 700 }}>$150</div>
+                  //       <div className="text-xs text-[var(--warm-brown)]/60">$0.15/credit</div>
+                  //     </div>
+                  //   </label>
+
+                  //   <div className="pt-2">
+                  //     <button className="text-[var(--warm-orange)] text-sm hover:text-[var(--warm-brown)] transition-colors flex items-center gap-1" style={{ fontWeight: 600 }}>
+                  //       View all plans <span>→</span>
+                  //     </button>
+                  //   </div>
+                  // </div>
+
+                  // {/* CTA Button */}
+//                   <div className="mt-6">
+//                     <button className="w-full py-3.5 px-8 rounded-full bg-[var(--warm-brown)] text-white hover:bg-[var(--warm-dark)] transition-all duration-300 shadow-sm hover:shadow-md" style={{ fontWeight: 600 }}>
+//                       Subscribe
+//                     </button>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </section>
+// */

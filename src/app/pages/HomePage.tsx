@@ -9,7 +9,8 @@ import { Footer } from '../components/Footer';
 import { convertPngToSvg } from '../utils/converter';
 import type { AuthView } from '../components/AuthCard';
 import { useAuth } from '../auth/AuthContext';
-import { canConvertAndTrack } from '../../services/usage';
+import { supabase } from '../../supabaseClient';
+// import { canConvertAndTrack } from '../../services/usage';
 
 export type AppState = 'initial' | 'uploaded' | 'processing' | 'result';
 
@@ -42,39 +43,42 @@ export function HomePage() {
 
   const handleConvert = async () => {
     if (!uploadedFile) return;
-
+  
     if (!user) {
       alert('Please log in to convert images.');
       return;
     }
-
+  
+    setAppState('processing');
+  
     try {
-      const check = await canConvertAndTrack(user.id);
-      if (!check.allowed) {
-        const message = check.reason ?? 'Your free conversion limit has been reached.';
-        const shouldUpgrade = window.confirm(`${message}\n\nGo to Pricing to upgrade?`);
-        if (shouldUpgrade) {
-          navigate('/pricing');
-        }
+      const formData = new FormData();
+      formData.append("file", uploadedFile);
+      const session = await supabase.auth.getSession();
+      const token = session.data.session?.access_token;
+
+       const response = await fetch("http://localhost:8000/convert", {
+       method: "POST",
+       headers: {
+       Authorization: `Bearer ${token}`,
+       },
+      body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.error || "Conversion failed, need subscription.");
+        setAppState('uploaded');
         return;
       }
-    } catch (error) {
-      console.error('Usage check failed:', error);
-      const message =
-        error instanceof Error ? error.message : typeof error === 'string' ? error : JSON.stringify(error);
-      alert(`Unable to verify your usage: ${message}`);
-      return;
-    }
-
-    setAppState('processing');
-    
-    try {
-      const svg = await convertPngToSvg(uploadedFile, settings);
-      setSvgResult(svg);
+  
+      const svgText = await response.text();
+setSvgResult(svgText);
       setAppState('result');
-    } catch (error) {
-      console.error('Conversion failed:', error);
-      alert('Conversion failed. Please try again.');
+  
+    }  catch (error: any) {
+      console.error("REAL ERROR:", error);
+      alert("Error: " + (error?.message || JSON.stringify(error)));
       setAppState('uploaded');
     }
   };

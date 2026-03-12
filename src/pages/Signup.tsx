@@ -12,6 +12,7 @@ export function SignupPage() {
   const [isBusy, setIsBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [name, setName] = useState("")
 
   const passwordsMatch = password === confirmPassword
 
@@ -32,9 +33,20 @@ export function SignupPage() {
     setSuccess(null)
 
     try {
-      await handleSignup(email.trim(), password)
-      setSuccess("Signup successful. You can now login.")
-      navigate("/login")
+      // 1️⃣ Signup in Supabase
+    await handleSignup(email.trim(), password, name.trim())
+
+    await fetch("http://localhost:8000/sync-user", {
+      method: "POST",
+      body: new URLSearchParams({
+        email: email.trim(),
+        full_name: name.trim()
+      })
+    })
+
+// 3️⃣ Show success and redirect
+setSuccess("Signup successful. You can now login.")
+navigate("/login")
     } catch (err: any) {
       setError(err?.message ?? "Something went wrong. Please try again.")
     } finally {
@@ -72,6 +84,22 @@ export function SignupPage() {
                   className="w-full px-4 py-3 rounded-xl border border-[var(--warm-brown)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--warm-orange)]/40"
                 />
               </div>
+
+              <div className="space-y-2">
+  <label
+    className="text-sm text-[var(--warm-brown)]"
+    style={{ fontWeight: 600 }}
+  >
+    Name
+  </label>
+  <input
+    value={name}
+    onChange={(e) => setName(e.target.value)}
+    type="text"
+    placeholder="Your full name"
+    className="w-full px-4 py-3 rounded-xl border border-[var(--warm-brown)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--warm-orange)]/40"
+  />
+</div>
 
               <div className="space-y-2">
                 <label className="text-sm text-[var(--warm-brown)]" style={{ fontWeight: 600 }}>

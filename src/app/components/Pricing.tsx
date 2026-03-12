@@ -1,7 +1,86 @@
 import { Check } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseClient";
+
+ 
+
 
 export function Pricing() {
+  const [selectedApiPlan, setSelectedApiPlan] = useState("API 100 plan");
+const [plans, setPlans] = useState<any[]>([]);
+
+useEffect(() => {
+  fetch("http://localhost:3000/api/plans")
+    .then(res => res.json())
+    .then(data => {
+      setPlans(data.docs);
+    })
+    .catch(err => console.error(err));
+}, []);
+  const handleSubscribe = async (planId: string) => {
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      
+      const token = session?.access_token;
+      if (!token) {
+        alert("Please login first.");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append("plan_id", planId);
+  
+      const orderRes = await fetch("http://localhost:8000/create-order", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
+      const orderData = await orderRes.json();
+  
+      const options = {
+        key: orderData.key,
+        amount: orderData.amount,
+        currency: "INR",
+        order_id: orderData.order_id,
+        
+        handler: async function (response: any) {
+  
+          const verifyData = new FormData();
+          verifyData.append("razorpay_order_id", response.razorpay_order_id);
+          verifyData.append("razorpay_payment_id", response.razorpay_payment_id);
+          verifyData.append("razorpay_signature", response.razorpay_signature);
+          verifyData.append("plan_id", planId);
+  
+          await fetch("http://localhost:8000/verify-payment", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: verifyData,
+          });
+  
+          alert("Subscription activated successfully!");
+        },
+      };
+  
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+  
+    } catch (error) {
+      console.error(error);
+      alert("Payment failed");
+    }
+  };
+
+  console.log("Pricing component mounted");
+
   return (
+    <>
     <section id="pricing-section" className="w-full px-6 py-20 md:py-28">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -72,9 +151,27 @@ export function Pricing() {
               </div>
 
               {/* CTA Button */}
-              <button className="w-full py-4 px-8 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]" style={{ fontWeight: 600 }}>
-                Subscribe
-              </button>
+              <button
+  onClick={() => {
+    const webPlan = plans.find(p => p.planName.trim() === "Web App");
+    if (webPlan) handleSubscribe(webPlan.id);
+  }}
+  className="w-full py-4 px-8 rounded-full bg-[var(--warm-orange)] text-white"
+>
+  Subscribe
+</button>
+
+{/* <button
+  onClick={() => {
+    console.log("Web Subscribe Clicked");
+    const webPlan = plans.find(p => p.planName.trim() === "Web App");
+    console.log("Web Plan:", webPlan);
+    if (webPlan) handleSubscribe(webPlan.id);
+  }}
+  className="w-full py-4 px-8 rounded-full bg-[var(--warm-orange)] text-white"
+>
+  Subscribe
+</button> */}
             </div>
           </div>
 
@@ -100,7 +197,14 @@ export function Pricing() {
                 {/* Pricing Options */}
                 <div className="space-y-3">
                   <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/40 rounded-2xl cursor-pointer hover:bg-[var(--warm-beige)]/60 transition-colors border border-[var(--warm-brown)]/10">
-                    <input type="radio" name="api-plan" className="w-5 h-5 accent-[var(--warm-orange)]" defaultChecked />
+                  <input
+  type="radio"
+  name="api-plan"
+  value="API 100 plan"
+  checked={selectedApiPlan === "API 100 plan"}
+  onChange={(e) => setSelectedApiPlan(e.target.value)}
+  className="w-5 h-5 accent-[var(--warm-orange)]"
+/>
                     <div className="flex-1 mx-4">
                       <div className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>100 credits</div>
                     </div>
@@ -111,7 +215,14 @@ export function Pricing() {
                   </label>
 
                   <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/40 rounded-2xl cursor-pointer hover:bg-[var(--warm-beige)]/60 transition-colors border border-[var(--warm-brown)]/10">
-                    <input type="radio" name="api-plan" className="w-5 h-5 accent-[var(--warm-orange)]" />
+                  <input
+  type="radio"
+  name="api-plan"
+  value="API 500"
+  checked={selectedApiPlan === "API 500"}
+  onChange={(e) => setSelectedApiPlan(e.target.value)}
+  className="w-5 h-5 accent-[var(--warm-orange)]"
+/>
                     <div className="flex-1 mx-4">
                       <div className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>500 credits</div>
                     </div>
@@ -122,7 +233,14 @@ export function Pricing() {
                   </label>
 
                   <label className="flex items-center justify-between p-4 bg-[var(--warm-beige)]/40 rounded-2xl cursor-pointer hover:bg-[var(--warm-beige)]/60 transition-colors border border-[var(--warm-brown)]/10">
-                    <input type="radio" name="api-plan" className="w-5 h-5 accent-[var(--warm-orange)]" />
+                  <input
+  type="radio"
+  name="api-plan"
+  value="API 1000"
+  checked={selectedApiPlan === "API 1000"}
+  onChange={(e) => setSelectedApiPlan(e.target.value)}
+  className="w-5 h-5 accent-[var(--warm-orange)]"
+/>
                     <div className="flex-1 mx-4">
                       <div className="text-[var(--warm-dark)]" style={{ fontWeight: 600 }}>1000 credits</div>
                     </div>
@@ -138,10 +256,20 @@ export function Pricing() {
                 </button>
               </div>
 
+              
               {/* CTA Button */}
-              <button className="w-full py-4 px-8 rounded-full bg-[var(--warm-brown)] text-white hover:bg-[var(--warm-dark)] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]" style={{ fontWeight: 600 }}>
-                Subscribe
-              </button>
+              <button
+  onClick={() => {
+    const apiPlan = plans.find(
+      (p) => p.planName.trim() === selectedApiPlan
+    );
+    if (apiPlan) handleSubscribe(apiPlan.id);
+  }}
+  className="w-full py-4 px-8 rounded-full bg-[var(--warm-brown)] text-white hover:bg-[var(--warm-dark)] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+  style={{ fontWeight: 600 }}
+>
+  Subscribe
+</button>
             </div>
           </div>
         </div>
@@ -151,6 +279,8 @@ export function Pricing() {
           <p>All plans include secure payments and instant activation. No hidden fees.</p>
         </div>
       </div>
+      
     </section>
+    </>
   );
 }

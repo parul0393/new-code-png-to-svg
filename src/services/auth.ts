@@ -5,14 +5,34 @@ export async function handleSignup(email: string, password: string, name: string
     email,
     password,
     options: {
-      data: {
-        name,
-      },
+      data: { name },
     },
   })
 
   if (error) {
     throw new Error(error.message)
+  }
+
+  // ✅ Sync to backend safely
+  if (data.user) {
+    try {
+      const res = await fetch("http://localhost:8000/sync-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          email: data.user.email || "",
+          full_name: name || "",
+        }),
+      })
+
+      if (!res.ok) {
+        console.error("Sync failed")
+      }
+    } catch (err) {
+      console.error("Backend sync error:", err)
+    }
   }
 
   return data

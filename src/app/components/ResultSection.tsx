@@ -20,7 +20,9 @@ export function ResultSection({ originalUrl, svgResult, onReset }: ResultSection
   };
 
   // Extract dimensions from SVG if available
-  const svgDataUrl = `data:image/svg+xml;base64,${btoa(svgResult)}`;
+  // const svgDataUrl = `data:image/svg+xml;base64,${btoa(svgResult)}`;
+  const svgBlob = new Blob([svgResult], { type: "image/svg+xml" });
+const svgDataUrl = URL.createObjectURL(svgBlob);
 
   return (
     <div className="space-y-8 animate-[fadeIn_0.5s_ease-in-out]">
