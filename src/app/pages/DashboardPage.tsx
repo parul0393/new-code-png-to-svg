@@ -68,7 +68,7 @@ export default function DashboardPage() {
       setCredits(
         typeof creditsData === "number"
           ? creditsData
-          : creditsData?.credits ?? creditsData?.remaining ?? 0
+          : creditsData?.credits ?? creditsData?.credits_remaining ?? 0
       );
     } catch (err: any) {
       setError(err.message || "Failed to load dashboard data");
