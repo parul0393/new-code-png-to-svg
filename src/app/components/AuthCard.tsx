@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { handleForgotPassword, handleGoogleLogin } from "../../services/auth"
 import { useAuth } from "../auth/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 export type AuthView = "login" | "signup"
 
@@ -22,6 +23,7 @@ export function AuthCard({
   const [success, setSuccess] = useState<string | null>(null)
   const [name, setName] = useState("")
   const { login, signup } = useAuth()
+  const navigate = useNavigate()
 
   const passwordsMatch = password === confirmPassword
 
@@ -31,7 +33,7 @@ export function AuthCard({
       if (forgotMode) return true
       return password.length > 0
     }
-    if (!name.trim()) return false  
+    if (!name.trim()) return false
     if (!password) return false
     if (!confirmPassword) return false
     if (!passwordsMatch) return false
@@ -55,12 +57,14 @@ export function AuthCard({
         }
         await login(email.trim(), password)
         setSuccess("Logged in successfully.")
+        navigate('/')
         return
       }
 
       await signup(email.trim(), password, name.trim())
       setSuccess("Signup successful. You are now logged in.")
       setForgotMode(false)
+      navigate('/')
     } catch (err: any) {
       setError(err?.message ?? "Something went wrong. Please try again.")
     } finally {
@@ -131,18 +135,18 @@ export function AuthCard({
           )
         ) : (
           <>
-          <div className="space-y-2">
-  <label className="text-sm text-[var(--warm-brown)]" style={{ fontWeight: 600 }}>
-    Name
-  </label>
-  <input
-    value={name}
-    onChange={(e) => setName(e.target.value)}
-    type="text"
-    placeholder="Enter your name"
-    className="w-full px-4 py-3 rounded-xl border border-[var(--warm-brown)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--warm-orange)]/40 bg-white"
-  />
-</div>
+            <div className="space-y-2">
+              <label className="text-sm text-[var(--warm-brown)]" style={{ fontWeight: 600 }}>
+                Name
+              </label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                placeholder="Enter your name"
+                className="w-full px-4 py-3 rounded-xl border border-[var(--warm-brown)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--warm-orange)]/40 bg-white"
+              />
+            </div>
             <div className="space-y-2">
               <label className="text-sm text-[var(--warm-brown)]" style={{ fontWeight: 600 }}>
                 Password
@@ -175,21 +179,21 @@ export function AuthCard({
             </div>
 
             <button
-  type="button"
-  onClick={async () => {
-    try {
-      setError(null)
-      setSuccess(null)
-      await handleGoogleLogin()
-    } catch (err: any) {
-      setError(err.message)
-    }
-  }}
-  className="w-full py-3.5 rounded-full border border-[var(--warm-brown)]/20 bg-white hover:bg-[var(--warm-cream)] transition-all duration-300 shadow-sm hover:shadow-md text-sm"
-  style={{ fontWeight: 600 }}
->
-  Continue with Google
-</button>
+              type="button"
+              onClick={async () => {
+                try {
+                  setError(null)
+                  setSuccess(null)
+                  await handleGoogleLogin()
+                } catch (err: any) {
+                  setError(err.message)
+                }
+              }}
+              className="w-full py-3.5 rounded-full border border-[var(--warm-brown)]/20 bg-white hover:bg-[var(--warm-cream)] transition-all duration-300 shadow-sm hover:shadow-md text-sm"
+              style={{ fontWeight: 600 }}
+            >
+              Continue with Google
+            </button>
 
 
           </>
@@ -241,14 +245,14 @@ export function AuthCard({
               </button>
 
               <button
-  type="button"
-  onClick={() => {
-    setError(null)
-    setSuccess(null)
-    setForgotMode(false)
-    onChangeView("signup")
-  }}
-  className="
+                type="button"
+                onClick={() => {
+                  setError(null)
+                  setSuccess(null)
+                  setForgotMode(false)
+                  onChangeView("signup")
+                }}
+                className="
     px-6
     py-2.5
     rounded-full
@@ -261,10 +265,10 @@ export function AuthCard({
     hover:shadow-md
     text-sm
   "
-  style={{ fontWeight: 600 }}
->
-  Create Account
-</button>
+                style={{ fontWeight: 600 }}
+              >
+                Create Account
+              </button>
             </>
           ) : (
             <>
@@ -283,14 +287,14 @@ export function AuthCard({
               </button>
 
               <button
-  type="button"
-  onClick={() => {
-    setError(null)
-    setSuccess(null)
-    setForgotMode(false)
-    onChangeView("login")
-  }}
-  className="
+                type="button"
+                onClick={() => {
+                  setError(null)
+                  setSuccess(null)
+                  setForgotMode(false)
+                  onChangeView("login")
+                }}
+                className="
     px-6
     py-2.5
     rounded-full
@@ -303,10 +307,10 @@ export function AuthCard({
     hover:shadow-md
     text-sm
   "
-  style={{ fontWeight: 700 }}
->
-  Login
-</button>
+                style={{ fontWeight: 700 }}
+              >
+                Login
+              </button>
             </>
           )}
         </div>

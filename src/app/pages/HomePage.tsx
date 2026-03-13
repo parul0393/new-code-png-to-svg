@@ -43,40 +43,40 @@ export function HomePage() {
 
   const handleConvert = async () => {
     if (!uploadedFile) return;
-  
+
     if (!user) {
       alert('Please log in to convert images.');
       return;
     }
-  
+
     setAppState('processing');
-  
+
     try {
       const formData = new FormData();
       formData.append("file", uploadedFile);
       const session = await supabase.auth.getSession();
       const token = session.data.session?.access_token;
 
-       const response = await fetch("http://localhost:8000/convert", {
-       method: "POST",
-       headers: {
-       Authorization: `Bearer ${token}`,
-       },
-      body: formData,
+      const response = await fetch("http://localhost:8000/convert", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         alert(errorData.error || "Conversion failed, need subscription.");
         setAppState('uploaded');
         return;
       }
-  
+
       const svgText = await response.text();
-setSvgResult(svgText);
+      setSvgResult(svgText);
       setAppState('result');
-  
-    }  catch (error: any) {
+
+    } catch (error: any) {
       console.error("REAL ERROR:", error);
       alert("Error: " + (error?.message || JSON.stringify(error)));
       setAppState('uploaded');
@@ -111,7 +111,7 @@ setSvgResult(svgText);
       <main className="flex-1 w-full">
         {appState === 'initial' && (
           <div className="space-y-0">
-            <Header />
+            {/* <Header /> */}
             <Hero
               onFileSelect={handleFileUpload}
               authView={authView}
