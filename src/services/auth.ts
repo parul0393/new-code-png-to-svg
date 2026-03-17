@@ -13,7 +13,7 @@ export async function handleSignup(email: string, password: string, name: string
     throw new Error(error.message)
   }
 
-  // ✅ Sync to backend safely
+  // Sync to Payload after signup
   if (data.user) {
     try {
       const res = await fetch("http://localhost:8000/sync-user", {
@@ -24,11 +24,12 @@ export async function handleSignup(email: string, password: string, name: string
         body: new URLSearchParams({
           email: data.user.email || "",
           full_name: name || "",
+          supabase_user_id: data.user.id,   // ← added
         }),
       })
 
       if (!res.ok) {
-        console.error("Sync failed")
+        console.error("Sync failed:", await res.text())
       }
     } catch (err) {
       console.error("Backend sync error:", err)
