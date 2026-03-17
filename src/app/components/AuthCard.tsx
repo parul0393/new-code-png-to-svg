@@ -86,20 +86,11 @@ export function AuthCard({
           <p className="text-sm text-[var(--warm-brown)]/70 leading-relaxed">
             {view === "login"
               ? forgotMode
-                ? "Enter your email and we’ll send you a reset link."
+                ? "Enter your email and we'll send you a reset link."
                 : "Use your email and password to continue."
               : "Create an account with email and password."}
           </p>
         </div>
-
-        <button
-          type="button"
-          onClick={onClose}
-          className="px-3 py-1.5 rounded-full border border-[var(--warm-brown)]/20 text-[var(--warm-brown)] hover:text-[var(--warm-orange)] hover:border-[var(--warm-orange)] transition-colors text-sm"
-          style={{ fontWeight: 600 }}
-        >
-          Back
-        </button>
       </div>
 
       <form className="space-y-4" onSubmit={onSubmit}>
@@ -119,19 +110,38 @@ export function AuthCard({
 
         {view === "login" ? (
           !forgotMode && (
-            <div className="space-y-2">
-              <label className="text-sm text-[var(--warm-brown)]" style={{ fontWeight: 600 }}>
-                Password
-              </label>
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                autoComplete="current-password"
-                placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--warm-brown)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--warm-orange)]/40 bg-white"
-              />
-            </div>
+            <>
+              <div className="space-y-2">
+                <label className="text-sm text-[var(--warm-brown)]" style={{ fontWeight: 600 }}>
+                  Password
+                </label>
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 rounded-xl border border-[var(--warm-brown)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--warm-orange)]/40 bg-white"
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    setError(null)
+                    setSuccess(null)
+                    await handleGoogleLogin()
+                  } catch (err: any) {
+                    setError(err.message)
+                  }
+                }}
+                className="w-full py-3.5 rounded-full border border-[var(--warm-brown)]/20 bg-white hover:bg-[var(--warm-cream)] transition-all duration-300 shadow-sm hover:shadow-md text-sm"
+                style={{ fontWeight: 600 }}
+              >
+                Continue with Google
+              </button>
+            </>
           )
         ) : (
           <>
@@ -194,8 +204,6 @@ export function AuthCard({
             >
               Continue with Google
             </button>
-
-
           </>
         )}
 
@@ -210,8 +218,6 @@ export function AuthCard({
             {success}
           </div>
         )}
-
-
 
         <button
           type="submit"
@@ -228,7 +234,7 @@ export function AuthCard({
               : "Sign up"}
         </button>
 
-        <div className="flex items-center justify-between pt-1">
+        {/* <div className="flex items-center justify-between pt-1">
           {view === "login" ? (
             <>
               <button
@@ -252,19 +258,7 @@ export function AuthCard({
                   setForgotMode(false)
                   onChangeView("signup")
                 }}
-                className="
-    px-6
-    py-2.5
-    rounded-full
-    bg-[var(--warm-orange)]
-    text-white
-    hover:bg-[var(--warm-brown)]
-    transition-all
-    duration-300
-    shadow-sm
-    hover:shadow-md
-    text-sm
-  "
+                className="px-6 py-2.5 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-sm hover:shadow-md text-sm"
                 style={{ fontWeight: 600 }}
               >
                 Create Account
@@ -294,28 +288,47 @@ export function AuthCard({
                   setForgotMode(false)
                   onChangeView("login")
                 }}
-                className="
-    px-6
-    py-2.5
-    rounded-full
-    bg-[var(--warm-orange)]
-    text-white
-    hover:bg-[var(--warm-brown)]
-    transition-all
-    duration-300
-    shadow-sm
-    hover:shadow-md
-    text-sm
-  "
+                className="px-6 py-2.5 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-sm hover:shadow-md text-sm"
                 style={{ fontWeight: 700 }}
               >
                 Login
               </button>
             </>
           )}
-        </div>
+        </div> */}
+        <div className="flex items-center justify-between pt-1">
+  {view === "login" && !forgotMode && (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          setForgotMode(true)
+          setError(null)
+          setSuccess(null)
+        }}
+        className="text-sm text-[var(--warm-orange)] hover:text-[var(--warm-brown)] transition-colors"
+        style={{ fontWeight: 600 }}
+      >
+        Forgot password?
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          setError(null)
+          setSuccess(null)
+          setForgotMode(false)
+          onChangeView("signup")
+        }}
+        className="px-6 py-2.5 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-sm hover:shadow-md text-sm"
+        style={{ fontWeight: 600 }}
+      >
+        Create Account
+      </button>
+    </>
+  )}
+</div>
       </form>
     </div>
   )
 }
-
