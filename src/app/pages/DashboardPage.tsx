@@ -239,7 +239,9 @@ export default function DashboardPage() {
                     className="text-4xl text-[var(--warm-dark)] tracking-tight"
                     style={{ fontWeight: 700 }}
                   >
-                    {credits.toLocaleString()}
+                    {/* {credits.toLocaleString()} */}
+                    <span className="black">{remainingCredits}</span>
+                    <span className="text-[var(--warm-brown)]/50"> / {totalCredits}</span>
                   </p>
                   <p className="text-sm text-[var(--warm-brown)]/50 mt-1">
                     credits remaining
