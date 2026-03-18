@@ -24,8 +24,8 @@ interface ApiKey {
 }
 
 export default function DashboardPage() {
-  const [remainingCredits, setRemainingCredits] = useState(0);
-  const [totalCredits, setTotalCredits] = useState(0);
+  const [remaining_credits, setRemainingCredits] = useState(0);
+  const [total_credits, setTotalCredits] = useState(0);
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [credits, setCredits] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,11 +69,8 @@ export default function DashboardPage() {
       console.log("API credits response:", creditsData);
 
       setKeys(Array.isArray(keysData) ? keysData : []);
-      setCredits(
-        typeof creditsData === "number"
-          ? creditsData
-          : creditsData?.credits ?? creditsData?.credits_remaining ?? 0
-      );
+      setRemainingCredits(creditsData?.remaining_credits ?? 0);
+      setTotalCredits(creditsData?.total_credits ?? 0);
     } catch (err: any) {
       setError(err.message || "Failed to load dashboard data");
     } finally {
@@ -240,8 +237,8 @@ export default function DashboardPage() {
                     style={{ fontWeight: 700 }}
                   >
                     {/* {credits.toLocaleString()} */}
-                    <span className="black">{remainingCredits}</span>
-                    <span className="text-[var(--warm-brown)]/50"> / {totalCredits}</span>
+                    <span className="black">{remaining_credits}</span>
+                    <span className="text-[var(--warm-brown)]/50"> / {total_credits}</span>
                   </p>
                   <p className="text-sm text-[var(--warm-brown)]/50 mt-1">
                     credits remaining
