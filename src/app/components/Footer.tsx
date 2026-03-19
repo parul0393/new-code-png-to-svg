@@ -54,7 +54,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
+                  href="/privacy"
                   className="text-sm text-[#313131]/60 hover:text-[var(--warm-orange)] transition-colors"
                 >
                   Privacy Policy
@@ -62,7 +62,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/terms"
                   className="text-sm text-[#313131]/60 hover:text-[var(--warm-orange)] transition-colors"
                 >
                   Terms of Service

@@ -7,6 +7,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
+  const [activeBtn, setActiveBtn] = useState<'login' | 'signup' | null>(null);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#ffffff]/95 backdrop-blur-md border-b border-[var(--warm-brown)]/10">
@@ -75,21 +76,43 @@ export function Header() {
               </>
             ) : (
               <>
-                <Link
+                {/* <Link
                   to="/?auth=login"
                   className="px-6 py-2.5 rounded-full border-2 border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)] transition-all duration-300"
                   style={{ fontWeight: 500 }}
                 >
                   Login
-                </Link>
+                </Link> */}
+                  <Link
+                    to="/?auth=login"
+                    onClick={() => setActiveBtn('login')}
+                    className={`px-6 py-2.5 rounded-full border-2 transition-all duration-300
+                    ${activeBtn === 'login'
+                        ? 'bg-[var(--warm-orange)] text-white border-[var(--warm-orange)]'
+                        : 'border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)]'
+                      }`}
+                  >
+                    Login
+                  </Link>
 
-                <Link
+                {/* <Link
                   to="/?auth=signup"
                   className="px-6 py-2.5 rounded-full bg-[var(--warm-orange)] text-white hover:bg-[var(--warm-brown)] transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
                   style={{ fontWeight: 600 }}
                 >
                   Sign Up
-                </Link>
+                </Link> */}
+                  <Link
+                    to="/?auth=signup"
+                    onClick={() => setActiveBtn('signup')}
+                    className={`px-6 py-2.5 rounded-full border-2 transition-all duration-300
+                      ${activeBtn === 'signup'
+                        ? 'bg-[var(--warm-orange)] text-white border-[var(--warm-orange)]'
+                        : 'border-[var(--warm-brown)]/30 text-[var(--warm-brown)] hover:border-[var(--warm-orange)] hover:text-[var(--warm-orange)]'
+                      }`}
+                  >
+                    Sign Up
+                  </Link>
               </>
             )}
           </nav>
