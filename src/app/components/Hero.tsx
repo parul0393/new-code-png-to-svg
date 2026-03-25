@@ -53,13 +53,13 @@ export function Hero({
           <div className="space-y-6 animate-[fadeIn_0.6s_ease-out]">
             {/* Headline */}
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl tracking-tight leading-tight" style={{ fontWeight: 700 }}>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl tracking-tight leading-tight text-[#000000]" style={{ fontWeight: 700 }}>
                 PNG to SVG
                 <br />
                 <span className="text-[var(--warm-orange)]">Converter</span>
               </h1>
               <p className="md:text-2xl leading-relaxed text-[16px] text-[#313131]">
-                Transform raster images into crisp, scalable vectors instantly. 
+                Transform raster images into crisp, scalable vectors instantly.
                 High-quality conversion with AI-powered precision.
               </p>
             </div>
@@ -82,10 +82,9 @@ export function Hero({
                 className={`
                   w-full max-w-lg relative rounded-3xl border-2 border-dashed p-12 md:p-16
                   cursor-pointer transition-all duration-300
-                  ${
-                    isDragging
-                      ? 'border-[var(--warm-orange)] bg-[var(--warm-peach)]/30 scale-[0.98]'
-                      : 'border-[var(--warm-brown)]/20 bg-white/50 hover:border-[var(--warm-orange)]'
+                  ${isDragging
+                    ? 'border-[var(--warm-orange)] bg-[var(--warm-peach)]/30 scale-[0.98]'
+                    : 'border-[var(--warm-brown)]/20 bg-white/50 hover:border-[var(--warm-orange)]'
                   }
                   shadow-lg
                 `}
@@ -99,35 +98,32 @@ export function Hero({
                 />
 
                 <div className="flex flex-col items-center justify-center space-y-6">
-                  <div
-                    className={`
-                      p-6 rounded-2xl transition-all duration-300
-                      ${isDragging ? 'bg-[var(--warm-orange)]' : 'bg-[var(--warm-peach)]'}
-                    `}
-                  >
+                  <div className="p-6 rounded-2xl bg-[#DCDCDC]">
                     {isDragging ? (
                       <ImageIcon className="w-12 h-12 text-white" />
                     ) : (
-                      <Upload className="w-12 h-12 text-[var(--warm-orange)]" />
+                      <Upload className="w-12 h-12 text-[#606060]" />
                     )}
                   </div>
 
                   <div className="text-center space-y-2">
-                    <p className="text-xl md:text-2xl text-[var(--warm-brown)]" style={{ fontWeight: 500 }}>
+                    <p className="text-xl md:text-2xl text-[#606060]" style={{ fontWeight: 500 }}>
                       {isDragging ? 'Drop your PNG here' : 'Click to upload or drag & drop'}
                     </p>
-                    <p className="text-sm md:text-base text-[#313131]/60">PNG files only</p>
+                    <p className="text-sm md:text-base text-[#313131]/60">
+                      PNG files only
+                    </p>
                   </div>
 
                   <button
                     className="
-                      px-8 py-3 rounded-full 
-                      bg-[var(--warm-orange)] text-white
-                      hover:bg-[var(--warm-brown)] 
-                      transition-all duration-300
-                      shadow-md hover:shadow-lg
-                      transform hover:scale-105
-                    "
+                    px-8 py-3 rounded-full 
+                    bg-[#606060] text-white
+                    hover:bg-[#313131] 
+                    transition-all duration-300
+                    shadow-md hover:shadow-lg
+                    transform hover:scale-105
+                  "
                     style={{ fontWeight: 500 }}
                   >
                     Choose File

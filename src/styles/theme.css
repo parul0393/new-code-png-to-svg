@@ -2,15 +2,15 @@
 
 :root {
   --font-size: 16px;
-  
+
   /* Warm color palette */
-  --warm-cream: #FFF8F0;
-  --warm-beige: #F5EBE0;
+  /* --warm-cream: #FFF8F0; */
+  --warm-beige: #DCDCDC;
   --warm-peach: #FFD6BA;
-  --warm-orange: #FF9F66;
-  --warm-brown: #8B6F47;
-  --warm-dark: #4A3428;
-  
+  --warm-orange: #606060;
+  --warm-brown: #313131;
+  --warm-dark: #606060;
+
   --background: var(--warm-cream);
   --foreground: var(--warm-dark);
   --card: #ffffff;
@@ -194,6 +194,7 @@
       height: 0;
       opacity: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
       opacity: 1;
@@ -205,6 +206,7 @@
       height: var(--radix-accordion-content-height);
       opacity: 1;
     }
+
     to {
       height: 0;
       opacity: 0;

@@ -59,10 +59,11 @@ export function HomePage() {
 
       const response = await fetch("http://localhost:8000/convert", {
         method: "POST",
+        body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
+        // body: formData,
       });
 
       if (!response.ok) {

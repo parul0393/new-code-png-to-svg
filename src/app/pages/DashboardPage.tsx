@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 
+
+
 interface ApiKey {
   id: string;
   api_key: string;
@@ -22,6 +24,8 @@ interface ApiKey {
 }
 
 export default function DashboardPage() {
+  const [remaining_credits, setRemainingCredits] = useState(0);
+  const [total_credits, setTotalCredits] = useState(0);
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [credits, setCredits] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,11 +69,8 @@ export default function DashboardPage() {
       console.log("API credits response:", creditsData);
 
       setKeys(Array.isArray(keysData) ? keysData : []);
-      setCredits(
-        typeof creditsData === "number"
-          ? creditsData
-          : creditsData?.credits ?? creditsData?.credits_remaining ?? 0
-      );
+      setRemainingCredits(creditsData?.remaining_credits ?? 0);
+      setTotalCredits(creditsData?.total_credits ?? 0);
     } catch (err: any) {
       setError(err.message || "Failed to load dashboard data");
     } finally {
@@ -121,6 +122,28 @@ export default function DashboardPage() {
       setError(err.message || "Failed to generate API key");
     } finally {
       setIsGenerating(false);
+    }
+  }
+
+  async function handleRevoke(id: string) {
+    const token = await getToken();
+    if (!token) {
+      setError("Not authenticated");
+      return;
+    }
+
+    try {
+      await fetch(`http://localhost:8000/api-key/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // refresh UI
+      await loadDashboard();
+    } catch (err: any) {
+      setError("Failed to revoke key");
     }
   }
 
@@ -213,7 +236,9 @@ export default function DashboardPage() {
                     className="text-4xl text-[var(--warm-dark)] tracking-tight"
                     style={{ fontWeight: 700 }}
                   >
-                    {credits.toLocaleString()}
+                    {/* {credits.toLocaleString()} */}
+                    <span className="black">{remaining_credits}</span>
+                    <span className="text-[var(--warm-brown)]/50"> / {total_credits}</span>
                   </p>
                   <p className="text-sm text-[var(--warm-brown)]/50 mt-1">
                     credits remaining
@@ -392,23 +417,34 @@ export default function DashboardPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => copyToClipboard(k.api_key, k.id)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border border-[var(--warm-brown)]/12 text-[var(--warm-brown)] hover:bg-[var(--warm-beige)]/50 hover:border-[var(--warm-orange)]/30 transition-all duration-200"
-                            style={{ fontWeight: 500 }}
-                          >
-                            {copiedKeyId === k.id ? (
-                              <>
-                                <Check className="w-3.5 h-3.5 text-emerald-500" />
-                                <span className="text-emerald-600">Copied!</span>
-                              </>
-                            ) : (
-                              <>
-                                <Copy className="w-3.5 h-3.5" />
-                                Copy
-                              </>
-                            )}
-                          </button>
+                          <div className="flex justify-end gap-2">
+                            {/* Copy Button */}
+                            <button
+                              onClick={() => copyToClipboard(k.api_key, k.id)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border border-[var(--warm-brown)]/12 text-[var(--warm-brown)] hover:bg-[var(--warm-beige)]/50 hover:border-[var(--warm-orange)]/30 transition-all duration-200"
+                              style={{ fontWeight: 500 }}
+                            >
+                              {copiedKeyId === k.id ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                                  <span className="text-emerald-600">Copied!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3.5 h-3.5" />
+                                  Copy
+                                </>
+                              )}
+                            </button>
+
+                            {/* Revoke Button */}
+                            <button
+                              onClick={() => handleRevoke(k.id)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-red-500 text-white hover:bg-red-600 transition-all"
+                            >
+                              Revoke
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
