@@ -15,8 +15,10 @@ export async function handleSignup(email: string, password: string, name: string
 
   // Sync to Payload after signup
   if (data.user) {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
+
     try {
-      const res = await fetch("http://localhost:8000/sync-user", {
+      const res = await fetch(`${backendUrl}/sync-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

@@ -10,7 +10,7 @@ export function Pricing() {
   const [plans, setPlans] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/plans")
+    fetch("https://admin-panell-beta.vercel.app/api/plans")
       .then(res => res.json())
       .then(data => {
         setPlans(data.docs);
@@ -29,10 +29,12 @@ export function Pricing() {
         return;
       }
 
+      const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
+
       const formData = new FormData();
       formData.append("plan_id", planId);
 
-      const orderRes = await fetch("http://localhost:8000/create-order", {
+      const orderRes = await fetch(`${backendUrl}/create-order`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -56,7 +58,7 @@ export function Pricing() {
           verifyData.append("razorpay_signature", response.razorpay_signature);
           verifyData.append("plan_id", planId);
 
-          await fetch("http://localhost:8000/verify-payment", {
+          await fetch(`${backendUrl}/verify-payment`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
