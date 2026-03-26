@@ -38,13 +38,13 @@ export function SignupPage() {
       // 1️⃣ Signup in Supabase
     await handleSignup(email.trim(), password, name.trim())
 
-    await fetch(`${backendUrl}/sync-user`, {
-      method: "POST",
-      body: new URLSearchParams({
-        email: email.trim(),
-        full_name: name.trim()
-      })
-    })
+    // await fetch(`${backendUrl}/sync-user`, {
+    //   method: "POST",
+    //   body: new URLSearchParams({
+    //     email: email.trim(),
+    //     full_name: name.trim()
+    //   })
+    // })
 
 // 3️⃣ Show success and redirect
 setSuccess("Signup successful. You can now login.")
