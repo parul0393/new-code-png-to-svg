@@ -49,12 +49,14 @@ export default function DashboardPage() {
       return;
     }
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
+
     try {
       const [keysRes, creditsRes] = await Promise.all([
-        fetch("http://localhost:8000/my-api-keys", {
+        fetch(`${backendUrl}/my-api-keys`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:8000/my-api-credits", {
+        fetch(`${backendUrl}/my-api-credits`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -94,10 +96,12 @@ export default function DashboardPage() {
       return;
     }
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
+
     try {
       const description = newKeyDescription.trim() || "Dashboard Key";
 
-      const res = await fetch("http://localhost:8000/generate-api-key", {
+      const res = await fetch(`${backendUrl}/generate-api-key`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -132,8 +136,10 @@ export default function DashboardPage() {
       return;
     }
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
+
     try {
-      await fetch(`http://localhost:8000/api-key/${id}`, {
+      await fetch(`${backendUrl}/api-key/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -517,7 +523,7 @@ export default function DashboardPage() {
 
             <div className="bg-[var(--warm-dark)] rounded-xl p-5 overflow-x-auto">
               <pre className="text-sm font-mono text-[var(--warm-cream)]/90 whitespace-pre leading-relaxed">
-                {`curl -X POST http://localhost:8000/api/convert \\
+                {`curl -X POST YOUR_BACKEND_URL/api/convert \\
   -H "x-api-key: YOUR_API_KEY" \\
   -F "file=@image.png"`}
               </pre>

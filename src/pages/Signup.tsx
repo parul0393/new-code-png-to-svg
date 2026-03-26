@@ -33,16 +33,18 @@ export function SignupPage() {
     setSuccess(null)
 
     try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
+
       // 1️⃣ Signup in Supabase
     await handleSignup(email.trim(), password, name.trim())
 
-    await fetch("http://localhost:8000/sync-user", {
-      method: "POST",
-      body: new URLSearchParams({
-        email: email.trim(),
-        full_name: name.trim()
-      })
-    })
+    // await fetch(`${backendUrl}/sync-user`, {
+    //   method: "POST",
+    //   body: new URLSearchParams({
+    //     email: email.trim(),
+    //     full_name: name.trim()
+    //   })
+    // })
 
 // 3️⃣ Show success and redirect
 setSuccess("Signup successful. You can now login.")
