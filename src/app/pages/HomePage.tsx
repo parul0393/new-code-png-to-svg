@@ -54,6 +54,9 @@ export function HomePage() {
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
 
+      console.log("Backend URL:", backendUrl);
+      console.log("Env Backend URL : ", import.meta.env.VITE_BACKEND_URL);
+
       const formData = new FormData();
       formData.append("file", uploadedFile);
       const session = await supabase.auth.getSession();

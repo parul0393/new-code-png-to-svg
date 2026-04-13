@@ -51,6 +51,9 @@ export default function DashboardPage() {
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "http://159.89.168.232:8010";
 
+    console.log("Backend URL:", backendUrl);
+    console.log("Env Backend URL : ", import.meta.env.VITE_BACKEND_URL);
+
     try {
       const [keysRes, creditsRes] = await Promise.all([
         fetch(`${backendUrl}/my-api-keys`, {
